@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from PyQt4 import QtGui, QtCore
 
-from design import new_room_design
-from info_window.info_model import InfoWindow
 from database.models import User, Key
+from info_window.info_model import InfoWindow
+from new_room.design import new_room_design
 
 
 class AddNewRoom(QtGui.QMainWindow, new_room_design.Ui_addRoomWindow):

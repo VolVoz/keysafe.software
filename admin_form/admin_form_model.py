@@ -11,9 +11,10 @@ from database.models import User, Key
 
 
 class AdminForm(QtGui.QMainWindow, admin_form_design.Ui_AdminFormMain):
-    def __init__(self):
+    def __init__(self, parent):
         super(self.__class__, self).__init__()
         self.setupUi(self)
+        self.parent = parent
         self.new_user_window = AddNewUser()
         self.new_room_window = AddNewRoom()
         self.new_user.clicked.connect(self.add_user)
@@ -56,4 +57,6 @@ class AdminForm(QtGui.QMainWindow, admin_form_design.Ui_AdminFormMain):
             QtCore.QTimer.singleShot(5000, self.info_error.close)
 
     def exit(self):
+        self.parent.close()
         self.close()
+

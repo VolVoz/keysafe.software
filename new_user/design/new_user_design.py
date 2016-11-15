@@ -9,6 +9,8 @@
 
 from PyQt4 import QtCore, QtGui
 
+from keyboard.keyboard_model import KeyboardWindow
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -22,6 +24,31 @@ try:
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
+
+
+class FirstnameLineEdit(QtGui.QLineEdit):
+
+    mousePressed = QtCore.pyqtProperty(QtGui.QMouseEvent)
+
+    def __init__(self, value):
+        super(FirstnameLineEdit, self).__init__(value)
+
+    def mousePressEvent(self, event):
+        self.keyboard = KeyboardWindow(parent=self, edit_text=u'імя користувача')
+        self.keyboard.show()
+
+
+class LastnameLineEdit(QtGui.QLineEdit):
+
+    mousePressed = QtCore.pyqtProperty(QtGui.QMouseEvent)
+
+    def __init__(self, value):
+        super(LastnameLineEdit, self).__init__(value)
+
+    def mousePressEvent(self, event):
+        self.keyboard = KeyboardWindow(parent=self, edit_text=u'прізвище користувача')
+        self.keyboard.show()
+
 
 class Ui_AddUserWindow(object):
     def setupUi(self, AddUserWindow):
@@ -47,7 +74,7 @@ class Ui_AddUserWindow(object):
         self.firstname_label.setStyleSheet(_fromUtf8("font: 75 20pt \"DejaVu Sans Mono for Powerline\";"))
         self.firstname_label.setObjectName(_fromUtf8("firstname_label"))
         self.gridLayout.addWidget(self.firstname_label, 0, 0, 1, 1)
-        self.firstname = QtGui.QLineEdit(self.widget)
+        self.firstname = FirstnameLineEdit(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -65,7 +92,7 @@ class Ui_AddUserWindow(object):
         self.lastname_label.setStyleSheet(_fromUtf8("font: 75 20pt \"DejaVu Sans Mono for Powerline\";"))
         self.lastname_label.setObjectName(_fromUtf8("lastname_label"))
         self.gridLayout.addWidget(self.lastname_label, 1, 0, 1, 1)
-        self.lastname = QtGui.QLineEdit(self.widget)
+        self.lastname = LastnameLineEdit(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

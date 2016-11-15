@@ -36,7 +36,6 @@ class GetKeyWindow(QtGui.QMainWindow, get_key_design.Ui_GetKeyWindow):
         elif self.user.admin:
             self.admin_settings_button.setVisible(True)
         self.exit_to_main.clicked.connect(self.exit)
-        self.adminForm = AdminForm()
         self.admin_settings_button.clicked.connect(self.open_settings_menu)
         self.click = None
         if keys:
@@ -88,5 +87,6 @@ class GetKeyWindow(QtGui.QMainWindow, get_key_design.Ui_GetKeyWindow):
         self.close()
 
     def open_settings_menu(self):
+        self.adminForm = AdminForm(parent=self)
         self.adminForm.show()
 

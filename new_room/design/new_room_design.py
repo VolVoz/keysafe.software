@@ -8,6 +8,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
+from keyboard.keyboard_model import KeyboardWindow
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -22,6 +23,19 @@ try:
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
+
+
+class RoomLineEdit(QtGui.QLineEdit):
+
+    mousePressed = QtCore.pyqtProperty(QtGui.QMouseEvent)
+
+    def __init__(self, value):
+        super(RoomLineEdit, self).__init__(value)
+
+    def mousePressEvent(self, event):
+        self.keyboard = KeyboardWindow(parent=self, edit_text=u'номер аудиторії')
+        self.keyboard.show()
+
 
 class Ui_addRoomWindow(object):
     def setupUi(self, addRoomWindow):
@@ -56,7 +70,7 @@ class Ui_addRoomWindow(object):
         self.add_rfid_chip.setStyleSheet(_fromUtf8("font: 75 20pt \"DejaVu Sans Mono for Powerline\";"))
         self.add_rfid_chip.setObjectName(_fromUtf8("add_rfid_chip"))
         self.gridLayout.addWidget(self.add_rfid_chip, 1, 0, 1, 1)
-        self.room = QtGui.QLineEdit(self.widget)
+        self.room = RoomLineEdit(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
