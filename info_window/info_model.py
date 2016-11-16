@@ -15,8 +15,8 @@ class InfoWindow(QtGui.QMainWindow, info.Ui_InfoWindow):
         self.button_ok.clicked.connect(self.ok)
 
     def ok(self):
+        if self.parent:
+            self.parent.close()
         if self.previous_parent:
             self.previous_parent.close()
-        elif self.parent:
-            self.parent.close()
         self.close()

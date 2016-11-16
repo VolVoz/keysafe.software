@@ -52,7 +52,7 @@ class MainFirstWindow(QtGui.QMainWindow, main_design.Ui_FirstWindow):
             QtCore.QTimer.singleShot(3000, self.new_user.show)
         else:
             # TODO: Open window with user auth
-            user = User.get_by_rfid("12334")['data']
+            user = User.get_by_rfid("11111")['data']
             #self.authenticate_user()
             username = user.firstname + u' ' + user.lastname
             self.welcome_window(username)

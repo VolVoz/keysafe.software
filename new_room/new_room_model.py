@@ -27,8 +27,15 @@ class AddNewRoom(QtGui.QMainWindow, new_room_design.Ui_addRoomWindow):
             if self.user.get_by_rfid(rfid_chip)['warnings'] and self.key.get_by_rfid(rfid_chip)['warnings']:
                 new_key = self.key.create(room, rfid_chip)
                 if new_key['errors'] or new_key['warnings']:
-                    self.info_error.show()
-                    QtCore.QTimer.singleShot(5000, self.info_error.close)
+                    if 'place' in new_key['warnings'].message:
+                        self.info = InfoWindow(label_text=u'Немає вільних місць для ключів',
+                                               parent=self)
+                        self.info.show()
+                        QtCore.QTimer.singleShot(5000, self.info.close)
+                        QtCore.QTimer.singleShot(5000, self.close)
+                    else:
+                        self.info_error.show()
+                        QtCore.QTimer.singleShot(5000, self.info_error.close)
                 else:
                     self.info = InfoWindow(label_text=u'Будь ласка, поставте ключ у приймач протягом 10 секунд', parent=self)
                     self.info.show()

@@ -3,7 +3,7 @@
 from PyQt4 import QtGui, QtCore
 
 from design import choice
-from database.models import UserKeyLink, User, Key
+from database.models import UserKeyLink, User, Key, KeyPlaces
 from info_window.info_model import InfoWindow
 
 
@@ -31,8 +31,11 @@ class ChoiceWindow(QtGui.QMainWindow, choice.Ui_ChoiceWindow):
 
     def press_yes_get_key(self):
         try:
-            UserKeyLink.getting_key(self.user, self.key)['data']
+            coordinates = KeyPlaces.get_coordinates(self.key.rfid_chip)['data']
+            print coordinates.coordinate_place_x
+            print coordinates.coordinate_place_y
             # TODO: run motors and magnet
+            UserKeyLink.getting_key(self.user, self.key)['data']
         except Exception as e:
             print e
         self.parent.close()
@@ -58,16 +61,19 @@ class ChoiceWindow(QtGui.QMainWindow, choice.Ui_ChoiceWindow):
     def press_yes_delete_key(self):
         key = Key.get_by_rfid(self.key)['data']
         status = key.status
-        deleted = User.delete(key)
+        coordinates = KeyPlaces.get_coordinates(key.rfid_chip)['data']
+        deleted = Key.delete(key)
         if deleted['data'] is True:
+            if status is True:
+                print coordinates.coordinate_place_x
+                print coordinates.coordinate_place_y
+                # return True
+                # TODO: start returning key from box
             self.info = InfoWindow(label_text=u'Ключ видалено', parent=self, previous_parent=self.parent)
             self.info.show()
-            if status is True:
-                return True
-                # TODO: start returning keys in keys in box
-            QtCore.QTimer.singleShot(5000, self.info.close)
-            QtCore.QTimer.singleShot(5000, self.close)
-            QtCore.QTimer.singleShot(5000, self.parent.close)
+            QtCore.QTimer.singleShot(3000, self.info.close)
+            QtCore.QTimer.singleShot(3000, self.close)
+            QtCore.QTimer.singleShot(3000, self.parent.close)
         else:
             self.info = InfoWindow(label_text=u'Вибачте, сталася помилка,зверніться будь ласка до адміністратора')
             self.info.show()

@@ -217,8 +217,16 @@ class Key(Base):
             if rfid in [key.rfid_chip for key in session.query(Key).filter().all()]:
                 raise IOError('WARNING!Key with this RFID: {0} already exist!'.format(rfid))
 
+            places = session.query(KeyPlaces).filter(KeyPlaces.status==True)
+            if places.count() >= 1:
+                place = places.first()
+            else:
+                raise IOError('WARNING!All key places are busy')
+            place.status = False
+            place.key_rfid = rfid
             new_key = Key(room=room, rfid_chip=rfid, status=True)
             session.add(new_key)
+            session.add(place)
             logger.info(u"Created key for room:{0}, with RFID:{1}".format(room, rfid))
             return session.query(Key).filter(Key.rfid_chip == rfid).first()
         except exc.SQLAlchemyError as e:
@@ -232,9 +240,13 @@ class Key(Base):
         logger.info('Start deleting key..')
 
         try:
+            place = session.query(KeyPlaces).filter(KeyPlaces.key_rfid == key.rfid_chip).first()
+            place.key_rfid = None
+            place.status = True
             key.deleted = True
             key.rfid_chip = None
             session.add(key)
+            session.add(place)
             logger.info("Key deleted.")
             return True
         except exc.SQLAlchemyError as e:
@@ -243,6 +255,50 @@ class Key(Base):
 
     def __repr__(self):
         return '<{0}: {1.room!r}:{1.rfid_chip!r}:{1.status!r} >'.format('KeyObject', self)
+
+
+class KeyPlaces(Base):
+
+    __tablename__ = 'key_places'
+
+    id = Column(Integer, primary_key=True)
+    key_rfid = Column(String(50), unique=True, nullable=True)
+    status = Column(Boolean, default=True)  # means True = free
+    coordinate_place_x = Column(String(50))
+    coordinate_place_y = Column(String(50))
+
+    def __init__(self, coordinate_place_x, coordinate_place_y):
+        self.coordinate_place_x = coordinate_place_x
+        self.coordinate_place_y = coordinate_place_y
+
+    @classmethod
+    @dbsession
+    def create(self, coordinate_place_x, coordinate_place_y, session):
+        try:
+            logger.info('Start register new place..')
+            register_new_place = KeyPlaces(coordinate_place_x=coordinate_place_x, coordinate_place_y=coordinate_place_y)
+            session.add(register_new_place)
+            logger.info(u"Registered place with coordinates"
+                        u" by X:{0}, by Y:{1}".format(coordinate_place_x, coordinate_place_y))
+        except exc.SQLAlchemyError as e:
+            logger.info("Place not created with error:{0}".format(e))
+            raise Exception('Place not created with error {0}'.format(e))
+
+    @classmethod
+    @dbsession
+    def get_coordinates(self, rfid, session):
+
+        logger.info('Start getting coordinates by RFID..')
+
+        try:
+            coordinates = session.query(KeyPlaces).filter(KeyPlaces.key_rfid == rfid).first()
+        except exc.SQLAlchemyError as e:
+            logger.info("Cant get coordinates by rfid: %s , %s", rfid, e)
+            raise Exception('Cant get coordinates by RFID. Error:{0}'.format(e))
+        if coordinates:
+            return coordinates
+        else:
+            raise IOError('WARNING!Coordinates by RFID:{0} not found'.format(rfid))
 
 
 class UserKeyLink(Base):
