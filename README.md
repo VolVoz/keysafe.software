@@ -1,15 +1,14 @@
 # keysafe.software
 
+#### Attention: from now you can run this project only on Raspberry Pi
 ```
 git clone https://github.com/VolVoz/keysafe.software.git
 ```
 
 ## For OS X
-
 ```
 $ brew install pyqt
 ```
-
 ## For Ubuntu
 
 ```
@@ -54,11 +53,6 @@ python database/createdb.py
 ```
 sudo -u postgres psql -d cad_keysafe
 cad_keysafe=# \dt
- Schema |     Name      | Type  |  Owner
---------+---------------+-------+----------
- public | key           | table | cad_root
- public | user          | table | cad_root
- public | user_key_link | table | cad_root
 ```
 
 ### TODO:
@@ -69,7 +63,5 @@ cad_keysafe=# \dt
 - [x] Folder structure
 - [ ] Setup UnitTesting with Nose
 - [x] Setup Database (PostgreSQL(prefer) or Mongo)
-- [ ] Spawn windows for timers(e.g. with gevents)
-- [ ] Make a runner
-- [ ] Build as a python package
-- [ ] It's not all :)
+- [X] Spawn windows for timers(e.g. with gevents)
+- [X] Make a runner
