@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from PyQt4 import QtGui, QtCore
-
+import zmq
 from design import new_user_design
 from info_window.info_model import InfoWindow
 from database.models import User, Key
@@ -16,10 +16,22 @@ class AddNewUser(QtGui.QMainWindow, new_user_design.Ui_AddUserWindow):
         self.exit_to_main.clicked.connect(self.exit)
         self.user = User
         self.key = Key
+        self.firstname.clear()
+        self.lastname.clear()
+        self.rfid_card.clear()
         self.info_error = InfoWindow(label_text=u'Вибачте, сталася помилка, зверніться будь ласка до адміністратора')
 
     def connect_rfid_card(self):
-        pass
+        self.startReading()
+        self.read_card = InfoWindow(label_text=u"Піднесіть карту", parent=self, hide_ok=True, read='user')
+        self.read_card.show()
+        QtCore.QTimer.singleShot(5000, self.read_card.return_rfid)
+
+    def startReading(self):
+        context = zmq.Context()
+        socket = context.socket(zmq.REQ)
+        socket.connect('tcp://127.0.0.1:5555')
+        socket.send("readTeacherId")
 
     def create_user(self):
         firstname = unicode(self.firstname.text().toUtf8(), encoding="UTF-8")
