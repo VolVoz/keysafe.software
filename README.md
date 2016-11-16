@@ -61,7 +61,6 @@ cad_keysafe=# \dt
 - [x] Create simple UI design
 - [x] Connect windows
 - [x] Folder structure
-- [ ] Setup UnitTesting with Nose
-- [x] Setup Database (PostgreSQL(prefer) or Mongo)
-- [X] Spawn windows for timers(e.g. with gevents)
+- [x] Setup Database
+- [X] Setup RFID reader
 - [X] Make a runner
