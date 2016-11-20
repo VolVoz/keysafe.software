@@ -1,6 +1,14 @@
 # keysafe.software
 
 #### Attention: from now you can run this project only on Raspberry Pi
+
+## Settings for display resolution from Waveshare 10.1inch HDMI LCD (H)
+```
+hdmi_group=2
+hdmi_mode=87
+hdmi_cvt 1024 600 60 6 0 0 0
+```
+
 ```
 git clone https://github.com/VolVoz/keysafe.software.git
 ```
