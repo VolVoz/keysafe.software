@@ -348,6 +348,9 @@ class UserKeyLink(Base):
         
         try:
             key = session.query(Key).filter(Key.rfid_chip == key_rfid).first()
+            if not key:
+                logger.info('Key not found!', key.room)
+                raise IOError('WARNING!Key not found!')
 
             if key.status is True:
                 logger.info('Key from room:%s already returned!', key.room)

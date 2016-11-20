@@ -34,7 +34,7 @@ class MainFirstWindow(QtGui.QMainWindow, main_design.Ui_FirstWindow):
             self.info.showFullScreen()
             self.new_user = AddNewUser()
             QtCore.QTimer.singleShot(3000, self.info.close)
-            QtCore.QTimer.singleShot(3000, self.new_user.show)
+            QtCore.QTimer.singleShot(3000, self.new_user.showFullScreen)
         else:
             self.authenticate_user()
 

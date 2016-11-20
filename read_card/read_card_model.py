@@ -39,7 +39,7 @@ class ReadCardWindow(QtGui.QMainWindow, read_card_design.Ui_ReadKeyWindow):
 
     def get_key_window(self, keys, user):
         self.get_keys_window = GetKeyWindow(keys, user)
-        QtCore.QTimer.singleShot(5000, self.get_keys_window.show)
+        QtCore.QTimer.singleShot(5000, self.get_keys_window.showFullScreen)
 
     def login(self, user):
         username = user.firstname + u' ' + user.lastname
