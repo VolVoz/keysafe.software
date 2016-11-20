@@ -31,7 +31,7 @@ class ChoiceWindow(QtGui.QMainWindow, choice.Ui_ChoiceWindow):
 
     def press_yes_get_key(self):
         try:
-            coordinates = KeyPlaces.get_coordinates(self.key.rfid_chip)['data']
+            coordinates = KeyPlaces.get_coordinates(self.key)['data']
             print coordinates.coordinate_place_x
             print coordinates.coordinate_place_y
             # TODO: run motors and magnet
