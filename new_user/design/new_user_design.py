@@ -35,7 +35,7 @@ class FirstnameLineEdit(QtGui.QLineEdit):
 
     def mousePressEvent(self, event):
         self.keyboard = KeyboardWindow(parent=self, edit_text=u'імя користувача')
-        self.keyboard.show()
+        self.keyboard.showFullScreen()
 
 
 class LastnameLineEdit(QtGui.QLineEdit):
@@ -47,7 +47,7 @@ class LastnameLineEdit(QtGui.QLineEdit):
 
     def mousePressEvent(self, event):
         self.keyboard = KeyboardWindow(parent=self, edit_text=u'прізвище користувача')
-        self.keyboard.show()
+        self.keyboard.showFullScreen()
 
 
 class Ui_AddUserWindow(object):

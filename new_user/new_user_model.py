@@ -24,7 +24,7 @@ class AddNewUser(QtGui.QMainWindow, new_user_design.Ui_AddUserWindow):
     def connect_rfid_card(self):
         self.startReading()
         self.read_card = InfoWindow(label_text=u"Піднесіть карту", parent=self, hide_ok=True, read='user')
-        self.read_card.show()
+        self.read_card.showFullScreen()
         QtCore.QTimer.singleShot(5000, self.read_card.return_rfid)
 
     def startReading(self):
@@ -44,19 +44,19 @@ class AddNewUser(QtGui.QMainWindow, new_user_design.Ui_AddUserWindow):
                     admin = True
                 new_user = self.user.create(firstname, lastname, rfid, admin)
                 if new_user['errors'] or new_user['warnings']:
-                    self.info_error.show()
+                    self.info_error.showFullScreen()
                     QtCore.QTimer.singleShot(5000, self.info_error.close)
                 else:
                     self.info = InfoWindow(label_text=u'Користувача додано!', parent=self)
-                    self.info.show()
+                    self.info.showFullScreen()
                     QtCore.QTimer.singleShot(5000, self.info.close)
                     QtCore.QTimer.singleShot(5000, self.close)
             else:
                 self.info = InfoWindow(label_text=u'Такий RFID ключ вже зареєстрований у системі')
-                self.info.show()
+                self.info.showFullScreen()
                 QtCore.QTimer.singleShot(5000, self.info.close)
         except:
-            self.info_error.show()
+            self.info_error.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info_error.close)
 
     def exit(self):

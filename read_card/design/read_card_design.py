@@ -91,7 +91,7 @@ class Ui_ReadKeyWindow(object):
 
         self.setCentralWidget(self.ReadKeyFormWidget)
         self.overlay = Overlay(self.centralWidget())
-        self.overlay.show()
+        self.overlay.showFullScreen()
 
 
     def resizeEvent(self, event):

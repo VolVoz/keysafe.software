@@ -69,7 +69,7 @@ class GetKeyWindow(QtGui.QMainWindow, get_key_design.Ui_GetKeyWindow):
                     user=self.user,
                     key=key['data'].rfid_chip,
                     parent=self)
-                self.choice.show()
+                self.choice.showFullScreen()
                 QtCore.QTimer.singleShot(10000, self.choice.close)
             else:
                 taken_key = UserKeyLink.get_only_taken_keys(key['data'].id)
@@ -80,7 +80,7 @@ class GetKeyWindow(QtGui.QMainWindow, get_key_design.Ui_GetKeyWindow):
                     self.info = InfoWindow(
                         label_text=u'Ключ узяв: {}'.format(taken_info)
                     )
-                    self.info.show()
+                    self.info.showFullScreen()
                     QtCore.QTimer.singleShot(10000, self.info.close)
 
     def exit(self):
@@ -88,5 +88,5 @@ class GetKeyWindow(QtGui.QMainWindow, get_key_design.Ui_GetKeyWindow):
 
     def open_settings_menu(self):
         self.adminForm = AdminForm(parent=self)
-        self.adminForm.show()
+        self.adminForm.showFullScreen()
 

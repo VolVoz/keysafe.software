@@ -25,7 +25,7 @@ class AddNewRoom(QtGui.QMainWindow, new_room_design.Ui_addRoomWindow):
     def connect_rfid_chip(self):
         self.startReading()
         self.read_card = InfoWindow(label_text=u"Піднесіть ключ", parent=self, hide_ok=True, read='key')
-        self.read_card.show()
+        self.read_card.showFullScreen()
         QtCore.QTimer.singleShot(5000, self.read_card.return_rfid)
 
     def startReading(self):
@@ -44,23 +44,23 @@ class AddNewRoom(QtGui.QMainWindow, new_room_design.Ui_addRoomWindow):
                     if 'place' in new_key['warnings'].message:
                         self.info = InfoWindow(label_text=u'Немає вільних місць для ключів',
                                                parent=self)
-                        self.info.show()
+                        self.info.showFullScreen()
                         QtCore.QTimer.singleShot(5000, self.info.close)
                         QtCore.QTimer.singleShot(5000, self.close)
                     else:
-                        self.info_error.show()
+                        self.info_error.showFullScreen()
                         QtCore.QTimer.singleShot(5000, self.info_error.close)
                 else:
                     self.info = InfoWindow(label_text=u'Будь ласка, поставте ключ у приймач протягом 10 секунд', parent=self)
-                    self.info.show()
+                    self.info.showFullScreen()
                     QtCore.QTimer.singleShot(5000, self.info.close)
                     QtCore.QTimer.singleShot(5000, self.close)
             else:
                 self.info = InfoWindow(label_text=u'Такий RFID ключ вже зареєстрований у системі')
-                self.info.show()
+                self.info.showFullScreen()
                 QtCore.QTimer.singleShot(5000, self.info.close)
         except:
-            self.info_error.show()
+            self.info_error.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info_error.close)
 
     def exit(self):

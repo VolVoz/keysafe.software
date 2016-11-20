@@ -25,35 +25,35 @@ class AdminForm(QtGui.QMainWindow, admin_form_design.Ui_AdminFormMain):
         self.info_error = InfoWindow(label_text=u'Вибачте, сталася помилка, зверніться будь ласка до адміністратора')
 
     def add_user(self):
-        self.new_user_window.show()
+        self.new_user_window.showFullScreen()
 
     def add_key(self):
-        self.new_room_window.show()
+        self.new_room_window.showFullScreen()
 
     def delete_users(self):
         users = User.get_all()
         if users['data']:
             self.delete_users_window = DeleteUsersWindow(users['data'])
-            self.delete_users_window.show()
+            self.delete_users_window.showFullScreen()
         elif users['warnings']:
             self.info = InfoWindow(label_text=u"Немає користувачів яких можна видалити")
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info.close)
         else:
-            self.info_error.show()
+            self.info_error.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info_error.close)
 
     def delete_keys(self):
         keys = Key.get_all()
         if keys['data']:
             self.delete_keys_window = DeleteKeysWindow(keys['data'])
-            self.delete_keys_window.show()
+            self.delete_keys_window.showFullScreen()
         elif keys['warnings']:
             self.info = InfoWindow(label_text=u"Немає ключів які можна видалити")
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info.close)
         else:
-            self.info_error.show()
+            self.info_error.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info_error.close)
 
     def exit(self):

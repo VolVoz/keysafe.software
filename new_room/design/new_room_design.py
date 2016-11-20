@@ -34,7 +34,7 @@ class RoomLineEdit(QtGui.QLineEdit):
 
     def mousePressEvent(self, event):
         self.keyboard = KeyboardWindow(parent=self, edit_text=u'номер аудиторії')
-        self.keyboard.show()
+        self.keyboard.showFullScreen()
 
 
 class Ui_addRoomWindow(object):

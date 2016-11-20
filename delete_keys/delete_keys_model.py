@@ -58,15 +58,15 @@ class DeleteKeysWindow(QtGui.QMainWindow, delete_keys_design.Ui_DeleteKeys):
                 label_text=u'Видалити ключ від кімнати {} ?'.format(key['data'].room),
                 key=key['data'].rfid_chip,
                 parent=self)
-            self.choice.show()
+            self.choice.showFullScreen()
             QtCore.QTimer.singleShot(10000, self.choice.close)
         elif key['warnings']:
             self.info = InfoWindow(label_text=u'У системі незнадено такого ключа')
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info.close)
         else:
             self.info = InfoWindow(label_text=u'Вибачте, сталася помилка,зверніться будь ласка до адміністратора')
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info.close)
 
     def exit(self):

@@ -35,22 +35,22 @@ class InfoWindow(QtGui.QMainWindow, info.Ui_InfoWindow):
             returning = UserKeyLink.returning_key(msg)
             if returning['warnings']:
                 self.info = InfoWindow(label_text=u"Цей ключ вже повернуто!", parent=self)
-                self.info.show()
+                self.info.showFullScreen()
                 QtCore.QTimer.singleShot(3000, self.info.close)
                 QtCore.QTimer.singleShot(3000, self.close)
             elif returning['errors']:
                 self.info = InfoWindow(label_text=u"Сталася помилка,зверністья до адміністратора!", parent=self)
-                self.info.show()
+                self.info.showFullScreen()
                 QtCore.QTimer.singleShot(3000, self.info.close)
                 QtCore.QTimer.singleShot(3000, self.close)
             else:
                 self.info = InfoWindow(label_text=u"Вставте ключ у приймач", parent=self)
-                self.info.show()
+                self.info.showFullScreen()
                 QtCore.QTimer.singleShot(5000, self.info.close)
                 QtCore.QTimer.singleShot(5000, self.close)
         else:
             self.info = InfoWindow(label_text=u"Ключа не виявлено", parent=self)
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(2000, self.info.close)
             QtCore.QTimer.singleShot(2000, self.close)
 
@@ -68,12 +68,12 @@ class InfoWindow(QtGui.QMainWindow, info.Ui_InfoWindow):
                 self.parent.rfid_chip.clear()
                 self.parent.rfid_chip.setText(msg)
             self.info = InfoWindow(label_text=u"Ідентифікатор додано", parent=self)
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(2000, self.info.close)
             QtCore.QTimer.singleShot(2000, self.close)
         else:
             self.info = InfoWindow(label_text=u"Ідентифікатора не знайдено", parent=self)
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(2000, self.info.close)
             QtCore.QTimer.singleShot(2000, self.close)
 

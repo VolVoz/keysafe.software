@@ -52,15 +52,15 @@ class DeleteUsersWindow(QtGui.QMainWindow, delete_users_design.Ui_DeleteUsers):
                 label_text=u'Видалити користувача {} ?'.format(user['data'].firstname + ' ' + user['data'].lastname),
                 user=user['data'].rfid_card,
                 parent=self)
-            self.choice.show()
+            self.choice.showFullScreen()
             QtCore.QTimer.singleShot(10000, self.choice.close)
         elif user['warnings']:
             self.info = InfoWindow(label_text=u'У системі немає активних користувачів')
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info.close)
         else:
             self.info = InfoWindow(label_text=u'Вибачте, сталася помилка,зверніться будь ласка до адміністратора')
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info.close)
 
     def exit(self):

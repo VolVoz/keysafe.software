@@ -25,13 +25,13 @@ class MainFirstWindow(QtGui.QMainWindow, main_design.Ui_FirstWindow):
     def authenticate_user(self):
         self.startReading()
         self.read_card_window = ReadCardWindow()
-        self.read_card_window.show()
+        self.read_card_window.showFullScreen()
         QtCore.QTimer.singleShot(4000, self.read_card_window.read_card_result)
 
     def get_the_keys(self):
         if User.get_all()['warnings']:
             self.info = InfoWindow(label_text=u"Перший запуск програми, будь ласка створіть користувача!")
-            self.info.show()
+            self.info.showFullScreen()
             self.new_user = AddNewUser()
             QtCore.QTimer.singleShot(3000, self.info.close)
             QtCore.QTimer.singleShot(3000, self.new_user.show)
@@ -41,7 +41,7 @@ class MainFirstWindow(QtGui.QMainWindow, main_design.Ui_FirstWindow):
     def put_the_keys(self):
         self.startReading()
         self.read_card = InfoWindow(label_text=u"Піднесіть ключ до зчитувача", hide_ok=True)
-        self.read_card.show()
+        self.read_card.showFullScreen()
         QtCore.QTimer.singleShot(5000, self.read_card.return_key)
 
     def startReading(self):
@@ -54,7 +54,7 @@ class MainFirstWindow(QtGui.QMainWindow, main_design.Ui_FirstWindow):
 def main():
     app = QtGui.QApplication(sys.argv)
     form = MainFirstWindow()
-    form.show()
+    form.showFullScreen()
     app.exec_()
 
 

@@ -34,7 +34,7 @@ class ReadCardWindow(QtGui.QMainWindow, read_card_design.Ui_ReadKeyWindow):
 
     def welcome_window(self, label_text):
         self.welcome = WelcomeWindow(label_text)
-        self.welcome.show()
+        self.welcome.showFullScreen()
         QtCore.QTimer.singleShot(5000, self.welcome.close)
 
     def get_key_window(self, keys, user):
@@ -46,7 +46,7 @@ class ReadCardWindow(QtGui.QMainWindow, read_card_design.Ui_ReadKeyWindow):
         self.welcome_window(username)
         keys = Key.get_all()
         if keys['errors']:
-            self.info_error.show()
+            self.info_error.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info_error.close)
         elif keys['warnings']:
             self.get_key_window(keys=None, user=None)

@@ -47,13 +47,13 @@ class ChoiceWindow(QtGui.QMainWindow, choice.Ui_ChoiceWindow):
         deleted = User.delete(user)
         if deleted['data'] is True:
             self.info = InfoWindow(label_text=u'Користувача видалено', parent=self, previous_parent=self.parent)
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info.close)
             QtCore.QTimer.singleShot(5000, self.close)
             QtCore.QTimer.singleShot(5000, self.parent.close)
         else:
             self.info = InfoWindow(label_text=u'Вибачте, сталася помилка,зверніться будь ласка до адміністратора')
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info.close)
             QtCore.QTimer.singleShot(5000, self.close)
             QtCore.QTimer.singleShot(5000, self.parent.close)
@@ -70,13 +70,13 @@ class ChoiceWindow(QtGui.QMainWindow, choice.Ui_ChoiceWindow):
                 # return True
                 # TODO: start returning key from box
             self.info = InfoWindow(label_text=u'Ключ видалено', parent=self, previous_parent=self.parent)
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(3000, self.info.close)
             QtCore.QTimer.singleShot(3000, self.close)
             QtCore.QTimer.singleShot(3000, self.parent.close)
         else:
             self.info = InfoWindow(label_text=u'Вибачте, сталася помилка,зверніться будь ласка до адміністратора')
-            self.info.show()
+            self.info.showFullScreen()
             QtCore.QTimer.singleShot(5000, self.info.close)
             QtCore.QTimer.singleShot(5000, self.close)
             QtCore.QTimer.singleShot(5000, self.parent.close)
