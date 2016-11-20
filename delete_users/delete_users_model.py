@@ -36,7 +36,7 @@ class DeleteUsersWindow(QtGui.QMainWindow, delete_users_design.Ui_DeleteUsers):
                 buttons[user.id] = QtGui.QPushButton(self.scrollAreaWidgetContents)
                 buttons[user.id].setFixedSize(150, 100)
                 buttons[user.id].setStyleSheet('QPushButton {;''color: black;'
-                                               'font: 55 30pt DejaVu Sans Mono for Powerline;}')
+                                               'font: 55 20pt DejaVu Sans Mono for Powerline;}')
                 buttons[user.id].setText(_translate("DeleteUsers", str(user.firstname.encode('utf-8')) + ' \n ' + str(user.lastname.encode('utf-8')), None))
                 buttons[user.id].setObjectName(user.rfid_card)
                 buttons[user.id].clicked.connect(self.button_clicked)
