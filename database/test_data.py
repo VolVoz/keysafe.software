@@ -14,17 +14,17 @@ from models import User, Key, UserKeyLink, KeyPlaces
 #         {"room": "212", "rfid_chip": "222"},
 #         {"room": "555", "rfid_chip": "555"},
 #         {"room": "343", "rfid_chip": "333"}]
-keys_places = [{"coordinate_place_x": "11111", "coordinate_place_y": "11111"},
-               {"coordinate_place_x": "22222", "coordinate_place_y": "22222"},
-               {"coordinate_place_x": "33333", "coordinate_place_y": "33333"},
-               {"coordinate_place_x": "44444", "coordinate_place_y": "44444"},
-               {"coordinate_place_x": "55555", "coordinate_place_y": "55555"}]
+keys_places = [{"coordinate_place": "11111"},
+               {"coordinate_place": "22222"},
+               {"coordinate_place": "33333"},
+               {"coordinate_place": "44444"},
+               {"coordinate_place": "55555"}]
 
 
 def create_test_data():
     try:
         for place in keys_places:
-            KeyPlaces.create(place['coordinate_place_x'], place['coordinate_place_y'])
+            KeyPlaces.create(place['coordinate_place'])
             print 'Places created!'
     except Exception as e:
         print 'Error - {}'.format(e)

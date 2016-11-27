@@ -40,9 +40,8 @@ class ChoiceWindow(QtGui.QMainWindow, choice.Ui_ChoiceWindow):
     def press_yes_get_key(self):
         try:
             coordinates = KeyPlaces.get_coordinates(self.key)['data']
-            print coordinates.coordinate_place_x
-            print coordinates.coordinate_place_y
-            pppath = "50011 50012"
+            print coordinates.coordinate_place
+            pppath = "50011 50012" # coordinate_place
             for comnd in pppath.split():
                 motor = int(comnd[-1])
                 direction = int(comnd[-2])
@@ -99,8 +98,7 @@ class ChoiceWindow(QtGui.QMainWindow, choice.Ui_ChoiceWindow):
         deleted = Key.delete(key)
         if deleted['data'] is True:
             if status is True:
-                print coordinates.coordinate_place_x
-                print coordinates.coordinate_place_y
+                print coordinates.coordinate_place
                 # return True
                 # TODO: start returning key from box
             self.info = InfoWindow(label_text=u'Ключ видалено', parent=self, previous_parent=self.parent)

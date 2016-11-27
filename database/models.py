@@ -43,11 +43,11 @@ def dbsession(f):
             sess.close()
             logger.info('Session closed!')
         return result
+
     return wrapped
 
 
 class User(Base):
-
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
@@ -117,7 +117,7 @@ class User(Base):
 
         logger.info('Start getting all users..')
         try:
-            users = session.query(User).filter(User.deleted==False).all()
+            users = session.query(User).filter(User.deleted == False).all()
         except exc.SQLAlchemyError as e:
             logger.info("Can't get users. {0}".format(e))
             raise Exception("Can't get users {0}".format(e))
@@ -131,7 +131,6 @@ class User(Base):
 
 
 class Key(Base):
-
     __tablename__ = 'key'
 
     id = Column(Integer, primary_key=True)
@@ -167,7 +166,7 @@ class Key(Base):
         logger.info("Start getting available keys..")
 
         try:
-            keys = session.query(Key).filter(Key.status==True).all()
+            keys = session.query(Key).filter(Key.status == True).all()
         except exc.SQLAlchemyError as e:
             logger.info("Can't get available keys")
             raise Exception("Can't get available keys.Error:{0}".format(e))
@@ -175,14 +174,14 @@ class Key(Base):
             return keys
         else:
             raise IOError("WARNING!Can't find available keys")
-    
+
     @classmethod
     @dbsession
     def get_taken_keys(self, session):
         logger.info("Start getting taken keys..")
 
         try:
-            keys = session.query(Key).filter(Key.status==False).all()
+            keys = session.query(Key).filter(Key.status == False).all()
         except exc.SQLAlchemyError as e:
             logger.info("Can't get taken keys")
             raise Exception("Can't get taken keys.Error:{0}".format(e))
@@ -198,7 +197,7 @@ class Key(Base):
         logger.info('Getting all keys..')
 
         try:
-            keys = session.query(Key).filter(Key.deleted==False).order_by('id').all()
+            keys = session.query(Key).filter(Key.deleted == False).order_by('id').all()
         except exc.SQLAlchemyError as e:
             logger.info("Cant get all keys. %s", e)
             raise Exception('Cant get all keys. {0}'.format(e))
@@ -217,7 +216,7 @@ class Key(Base):
             if rfid in [key.rfid_chip for key in session.query(Key).filter().all()]:
                 raise IOError('WARNING!Key with this RFID: {0} already exist!'.format(rfid))
 
-            places = session.query(KeyPlaces).filter(KeyPlaces.status==True)
+            places = session.query(KeyPlaces).filter(KeyPlaces.status == True)
             if places.count() >= 1:
                 place = places.first()
             else:
@@ -258,28 +257,25 @@ class Key(Base):
 
 
 class KeyPlaces(Base):
-
     __tablename__ = 'key_places'
 
     id = Column(Integer, primary_key=True)
     key_rfid = Column(String(50), unique=True, nullable=True)
     status = Column(Boolean, default=True)  # means True = free
-    coordinate_place_x = Column(String(50))
-    coordinate_place_y = Column(String(50))
+    coordinate_place = Column(String(50))
 
-    def __init__(self, coordinate_place_x, coordinate_place_y):
-        self.coordinate_place_x = coordinate_place_x
-        self.coordinate_place_y = coordinate_place_y
+    def __init__(self, coordinate_place):
+        self.coordinate_place = coordinate_place
 
     @classmethod
     @dbsession
-    def create(self, coordinate_place_x, coordinate_place_y, session):
+    def create(self, coordinate_place, session):
         try:
             logger.info('Start register new place..')
-            register_new_place = KeyPlaces(coordinate_place_x=coordinate_place_x, coordinate_place_y=coordinate_place_y)
+            register_new_place = KeyPlaces(coordinate_place=coordinate_place)
             session.add(register_new_place)
             logger.info(u"Registered place with coordinates"
-                        u" by X:{0}, by Y:{1}".format(coordinate_place_x, coordinate_place_y))
+                        u" by coordinates:{0}".format(coordinate_place))
         except exc.SQLAlchemyError as e:
             logger.info("Place not created with error:{0}".format(e))
             raise Exception('Place not created with error {0}'.format(e))
@@ -302,7 +298,6 @@ class KeyPlaces(Base):
 
 
 class UserKeyLink(Base):
-
     __tablename__ = 'user_key_link'
 
     id = Column(Integer, primary_key=True)
@@ -330,7 +325,7 @@ class UserKeyLink(Base):
 
             new_get = UserKeyLink(user=user, key=key)
             key.status = False
-            
+
             session.add(new_get)
             session.add(key)
             logger.info('User: %s with RFID:%s get key from room:%s with RFID:%s',
@@ -345,7 +340,7 @@ class UserKeyLink(Base):
     def returning_key(self, key_rfid, session):
 
         logger.info('Starting returned Key..')
-        
+
         try:
             key = session.query(Key).filter(Key.rfid_chip == key_rfid).first()
             if not key:
@@ -355,9 +350,10 @@ class UserKeyLink(Base):
             if key.status is True:
                 logger.info('Key from room:%s already returned!', key.room)
                 raise IOError('WARNING!Key already returned!')
-            
+
             # get last taken element
-            relation = session.query(UserKeyLink).filter(UserKeyLink.key == key, UserKeyLink.date_returned == None).first()
+            relation = session.query(UserKeyLink).filter(UserKeyLink.key == key,
+                                                         UserKeyLink.date_returned == None).first()
             # set date taken and key new status
             relation.date_returned = datetime.datetime.utcnow()
             key.status = True
@@ -369,7 +365,7 @@ class UserKeyLink(Base):
         except (exc.SQLAlchemyError, InvalidRequestError) as e:
             logger.info("Some error happend when key id:%s returned %s", key.id, e)
             raise Exception('Some error happend when key returned:{0}'.format(e))
-            
+
     @classmethod
     @dbsession
     def get_all_operations(self, session):
@@ -401,6 +397,3 @@ class UserKeyLink(Base):
 
     def __repr__(self):
         return '<{0}: {1.user!r}:{1.key!r}:{1.date_taken!r}:{1.date_returned!r} >'.format('UserKeyLinkObject', self)
-
-
-
