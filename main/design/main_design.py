@@ -55,6 +55,6 @@ class Ui_FirstWindow(object):
 
     def retranslateUi(self, FirstWindow):
         FirstWindow.setWindowTitle(_translate("FirstWindow", "MainWindow", None))
-        self.get_key.setText(_translate("FirstWindow", "ВЗЯТИ ВКЛЮЧ", None))
+        self.get_key.setText(_translate("FirstWindow", "ВЗЯТИ КЛЮЧ", None))
         self.return_key.setText(_translate("FirstWindow", "ПОКЛАСТИ КЛЮЧ", None))
 
