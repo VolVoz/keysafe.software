@@ -4,9 +4,10 @@ import zmq
 from design import new_room_design
 from info_window.info_model import InfoWindow
 
-from database.models import User, Key
+from database.models import User, Key, KeyPlaces
 from info_window.info_model import InfoWindow
 from new_room.design import new_room_design
+from hardware.move_caret import move_mechanical_system
 
 
 class AddNewRoom(QtGui.QMainWindow, new_room_design.Ui_addRoomWindow):
@@ -53,8 +54,17 @@ class AddNewRoom(QtGui.QMainWindow, new_room_design.Ui_addRoomWindow):
                 else:
                     self.info = InfoWindow(label_text=u'Будь ласка, поставте ключ у приймач протягом 10 секунд', parent=self)
                     self.info.showFullScreen()
+                    rfid = new_key['data'].rfid_chip
+                    coordinates = KeyPlaces.get_coordinates(rfid=rfid)['data'].coordinate_place
+
+                    def run():
+                        move_mechanical_system(coordinates, 'push')
+
                     QtCore.QTimer.singleShot(5000, self.info.close)
                     QtCore.QTimer.singleShot(5000, self.close)
+                    QtCore.QTimer.singleShot(5000, run)
+
+
             else:
                 self.info = InfoWindow(label_text=u'Такий RFID ключ вже зареєстрований у системі')
                 self.info.showFullScreen()

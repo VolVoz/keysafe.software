@@ -3,7 +3,8 @@ import zmq
 from PyQt4 import QtGui, QtCore
 
 from design import info
-from database.models import UserKeyLink
+from database.models import UserKeyLink, KeyPlaces
+from hardware.move_caret import move_mechanical_system
 
 
 class InfoWindow(QtGui.QMainWindow, info.Ui_InfoWindow):
@@ -46,8 +47,15 @@ class InfoWindow(QtGui.QMainWindow, info.Ui_InfoWindow):
             else:
                 self.info = InfoWindow(label_text=u"Вставте ключ у приймач", parent=self)
                 self.info.showFullScreen()
+                rfid = returning['data'].key.rfid_chip
+                coordinates = KeyPlaces.get_coordinates(rfid=rfid)['data'].coordinate_place
+
+                def run():
+                    move_mechanical_system(coordinates, 'push')
+
                 QtCore.QTimer.singleShot(5000, self.info.close)
                 QtCore.QTimer.singleShot(5000, self.close)
+                QtCore.QTimer.singleShot(5000, run)
         else:
             self.info = InfoWindow(label_text=u"Ключа не виявлено", parent=self)
             self.info.showFullScreen()
