@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-from PyQt4 import QtGui, QtCore
 import zmq
-from design import new_room_design
-from info_window.info_model import InfoWindow
-
+from PyQt4 import QtGui, QtCore
 from database.models import User, Key, KeyPlaces
 from info_window.info_model import InfoWindow
 from new_room.design import new_room_design
