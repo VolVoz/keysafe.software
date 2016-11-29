@@ -54,6 +54,18 @@ sudo pip install -r requirements/requirements.txt
 ```
 psql -d cad_keysafe
 cad_keysafe=# \dt
+
+             List of relations
+             
+| Schema |     Name      | Type  |  Owner   |
+|--------|---------------|-------|----------|
+| public | key           | table | cad_root |
+| public | key_places    | table | cad_root |
+| public | user          | table | cad_root |
+| public | user_key_link | table | cad_root |
+
+(4 rows)
+
 ```
 
 ## Install PyQt on OS X (for development)
