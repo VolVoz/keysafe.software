@@ -48,6 +48,7 @@ sudo pip install -r requirements/requirements.txt
 5. Confirm error(s) are gone by entering: psql at the command prompt.
 6. Output should show psql (x.x.x) Type "help" for help.
 7. Run from terminal ./makedb.sh
+8. Run python keysafe.software/database.createdb.py
 
 
 #### Check created database:

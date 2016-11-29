@@ -10,9 +10,8 @@ if psql -lqt | cut -d \| -f 1 | grep -qw cad_keysafe; then
         dropdb cad_keysafe
         echo "database was removed"
         createdb cad_keysafe
-        # run python script for create dabase by models
         echo "database created"
-        psql -d postgres -c "CREATE USER cad_root WITH PASSWORD 'root_pass';"
+        psql -d postgres -c "CREATE USER cad_root WITH PASSWORD 'root_pass';" || echo "User 'cad_root' already exists "
         psql -d postgres -c "GRANT ALL PRIVILEGES ON DATABASE cad_keysafe to cad_root;"
         echo "done"
     else
@@ -20,11 +19,9 @@ if psql -lqt | cut -d \| -f 1 | grep -qw cad_keysafe; then
     fi
 else
     createdb cad_keysafe
-    # run python script for create dabase by models
     echo "database created"
-    psql -d postgres -c "CREATE USER cad_root WITH PASSWORD 'root_pass';"
+    psql -d postgres -c "CREATE USER cad_root WITH PASSWORD 'root_pass';" || echo "User 'cad_root' already exists "
     psql -d postgres -c "GRANT ALL PRIVILEGES ON DATABASE cad_keysafe to cad_root;"
     echo "user 'cad_root' with password 'root_pass' created"
-    python database/createdb.py
     echo "done"
 fi
