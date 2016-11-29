@@ -10,9 +10,6 @@ class Magnet:
         gpio.setup(self.gpin, gpio.OUT)
         gpio.output(self.gpin, 0)
 
-    def __del__(self):
-        gpio.output(self.gpin, 0)
-
     def up(self):
         gpio.output(self.gpin, 1)
 
