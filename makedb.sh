@@ -25,5 +25,6 @@ else
     psql -d postgres -c "CREATE USER cad_root WITH PASSWORD 'root_pass';"
     psql -d postgres -c "GRANT ALL PRIVILEGES ON DATABASE cad_keysafe to cad_root;"
     echo "user 'cad_root' with password 'root_pass' created"
+    python database/createdb.py
     echo "done"
 fi
